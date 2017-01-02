@@ -14,6 +14,12 @@ namespace MVCStudList.Models
             Students = new HashSet<Student>();
         }
 
+        public Group(string name)
+        {
+            Students = new HashSet<Student>();
+            Name = name;
+        }
+
         [Key]
         public int IDGroup { get; set; }
 
@@ -28,5 +34,6 @@ namespace MVCStudList.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
+
     }
 }

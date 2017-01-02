@@ -10,10 +10,18 @@ namespace MVCStudList.Controllers
 {
     public class HomeController : Controller
     {
+        //private StudentListModel model = new StudentListModel();
+
         public ActionResult Index()
         {
             Database.SetInitializer<StorageContext>(null);  // to wyłącza sprawdzanie migracji
-            return View();
+            Storage s = new Storage();
+            s.GetGroups();
+            StudentListModel model = new StudentListModel();
+            Database.SetInitializer<StorageContext>(null);  // to wyłącza sprawdzanie migracji
+            return View(model);
         }
+
+
     }
 }

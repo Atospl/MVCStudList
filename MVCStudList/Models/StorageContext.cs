@@ -17,20 +17,20 @@ namespace MVCStudList.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
-            modelBuilder.Entity<Group>()
-                .Property(e => e.Stamp)
-                .IsFixedLength();
+            //modelBuilder.Entity<Group>()
+            //    .Property(e => e.Stamp)
+            //    .IsFixedLength();
 
-            modelBuilder.Entity<Group>()
-                .HasMany(e => e.Students)
-                .WithRequired(e => e.Group)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<Group>()
+            //    .HasMany(e => e.Students)
+            //    .WithRequired(e => e.Group)
+            //    .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Student>()
-                .Property(e => e.Stamp)
-                .IsFixedLength();
+            //modelBuilder.Entity<Student>()
+            //    .Property(e => e.Stamp)
+            //    .IsFixedLength();
         }
     }
 }

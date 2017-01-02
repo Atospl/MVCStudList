@@ -38,5 +38,21 @@ namespace MVCStudList.Models
 
         [ForeignKey("IDGroup")]
         public virtual Group Group { get; set; }
+
+        // TODO check for IDStudent!
+        public Student(string firstName, string lastName, string birthPlace, string indexNr, DateTime birthDate, int groupID)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            BirthPlace = birthPlace;
+            IndexNo = indexNr;
+            IDGroup = groupID;
+            BirthDate = birthDate;
+        }
+
+        private Student()
+        {
+
+        }
     }
 }

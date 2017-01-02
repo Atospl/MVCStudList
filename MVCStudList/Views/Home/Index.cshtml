@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MVCStudList.Models.StudentListModel
+
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -19,42 +21,38 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-8" style="background-color:lavender;">
+        <div class="col-sm-8">
             <div class="row">
-                <div class="col-sm-6" style="background-color:lightcyan;">
+                <div class="col-sm-6">
                     <label>Grupa:</label>
                 </div>
-                <div class="col-sm-6" style="background-color:lightgray;">
+                <div class="col-sm-6">
                     <div class="dropdown">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
                             Dropdown Example
                             <span class="caret"></span>
                         </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">HTML</a></li>
-                            <li><a href="#">CSS</a></li>
-                            <li><a href="#">JavaScript</a></li>
-                        </ul>
+                        @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name"))
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6" style="background-color:lightcyan;">
+                <div class="col-sm-6">
                     <label>Miasto:</label>
                 </div>
-                <div class="col-sm-6" style="background-color:lightgray;">
+                <div class="col-sm-6">
                     <div class="form-group">
                         <input type="text" class="form-control" id="usr">
                     </div>           
                 </div>
             </div>
         </div>
-        <div class="col-sm-4" style="background-color:lavenderblush;">
+        <div class="col-sm-4">
             <div class="row">
-                <div class="col-sm-6" style="background-color:lightcyan;">
+                <div class="col-sm-6">
                     <button type="button" class="btn btn-default btn-block">Grupy</button>
                 </div>
-                <div class="col-sm-6" style="background-color:lightgray;">
+                <div class="col-sm-6">
                     <button type="button" class="btn btn-default btn-block">Grupy</button>
                 </div>
             </div>
