@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 
 <script>
@@ -66,7 +65,77 @@
 </table>
 
 <br />
-Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
 @Html.PagedListPager(Model, page => Url.Action("StudentsList",
     new { page, currentFilter = ViewBag.CurrentFilter }))
+
+<div class="row">
+    <div class="col-sm-4">
+        <label>Grupa:</label>
+    </div>
+    <div class="col-sm-8 form-group">
+        <input type="text" class="form-control" id="usr">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <label>Imię:</label>
+    </div>
+    <div class="col-sm-8 form-group">
+        <input type="text" class="form-control" id="usr">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <label>Nazwisko:</label>
+    </div>
+    <div class="col-sm-8 form-group">
+        <input type="text" class="form-control" id="usr">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <label>Miejsce urodzenia:</label>
+    </div>
+    <div class="col-sm-8 form-group">
+        <input type="text" class="form-control" id="usr">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <label>Data urodzenia:</label>
+    </div>
+    <div class="col-sm-8 form-group">
+        <input type="text" class="form-control" id="usr" placeholder="1/01/2016">
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-4">
+        <label>Indeks:</label>
+    </div>
+    <div class="col-sm-8 form-group">
+        <input type="text" class="form-control" id="usr">
+    </div>
+</div>
+
+<div class="row">
+    <div class="button-box col-sm-6">
+    </div>
+    <div class="button-box col-sm-6">
+        <div class="button-box col-sm-2">
+            <button type="button" class="btn btn-default pull-right btn-block">Nowy</button>
+        </div>
+        <div class="button-box col-sm-2">
+            <button type="button" class="btn btn-default pull-right btn-block">Zapisz</button>
+        </div>
+        <div class="button-box col-sm-2">
+            <button type="button" class="btn btn-default pull-right btn-block">Usuń</button>
+        </div>
+    </div>
+</div>
