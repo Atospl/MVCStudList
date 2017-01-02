@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using PagedList;
+using System.Web.Configuration;
 
 namespace MVCStudList.Models
 {
@@ -26,6 +28,24 @@ namespace MVCStudList.Models
                 return storage.GetStudents();
             }
         }
+
+        public int PageNumber;
+        public string SelectedIndexNo;
+
+        public string GetBirthDate()
+        {
+            if (SelectedIndexNo == null || SelectedIndexNo.Equals(""))
+                return "";
+            else
+                return Students.Where(stud => stud.IndexNo.Equals(SelectedIndexNo)).First().BirthDate.ToString();
+        }
+
+        public IPagedList<Student> StudentsPagedList {
+            get {
+                return Students.ToPagedList(PageNumber, int.Parse(WebConfigurationManager.AppSettings["StudListLen"]));
+            }
+        }
+
 
         public List<Group> GetGroups()
         {

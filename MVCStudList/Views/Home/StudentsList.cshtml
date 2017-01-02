@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<MVCStudList.Models.Student>
+﻿@model MVCStudList.Models.StudentListModel
 @using PagedList.Mvc;
 <link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 <head>
@@ -6,18 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script type="text/javascript" src="~/scripts/jquery-3.1.1.min.js"></script>
 </head>
 
-<script>
-    jQuery(document).ready(function ($) {
-        $(".clickable-row").click(function () {
-            window.document.location = $(this).data("href");
-        });
-    });
-    function DoNav(theUrl) {
-        document.location.href = theUrl;
+<script type="text/javascript">
+    function SetupInputs(id) {
+        var nameSelector = id + ' FN';
+        var surnameSelector = id + ' LN';
+        var birthplaceSelector = id + ' BP';
+        var indexnoSelector = id + ' IN';
+
+        var name = document.getElementById(nameSelector).innerText;
+        var surname = document.getElementById(surnameSelector).innerText;
+        var birthplace = document.getElementById(birthplaceSelector).innerText;
+        var indexno = document.getElementById(indexnoSelector).innerText;
+
+        $('#fname').val(name);
+        $('#lname').val(name);
+        $('#bplace').val(name);
+        $('#inumber').val(name);
+
+        //hack hack hack
+        @Model.SelectedIndexNo = id;
+        var birthday = @Model.GetBirthDate();
+        console.log(name);
     }
+
 </script>
+
 @{
     Layout = null;
 }
@@ -42,22 +58,22 @@
         </th>
     </tr>
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.StudentsPagedList)
     {
-        <tr class="clickable-row" onclick="DoNav('dasda');">
-            <td>
+        <tr class="clickable-row" onclick="SetupInputs(@item.IDStudent);" id="@item.IDStudent">
+            <td id="@item.IDStudent FN">
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
-            <td>
+            <td id="@item.IDStudent LN">
                 @Html.DisplayFor(modelItem => item.LastName)
             </td>
-            <td>
+            <td id="@item.IDStudent GN">
                 @Html.DisplayFor(modelItem => item.Group.Name)
             </td>
-            <td>
+            <td id="@item.IDStudent BP">
                 @Html.DisplayFor(modelItem => item.BirthPlace)
             </td>
-            <td>
+            <td id="@item.IDStudent IN">
                 @Html.DisplayFor(modelItem => item.IndexNo)
             </td>
         </tr>
@@ -67,7 +83,7 @@
 <br />
 @*Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount*@
 
-@Html.PagedListPager(Model, page => Url.Action("StudentsList",
+@Html.PagedListPager(Model.StudentsPagedList, page => Url.Action("StudentsList",
     new { page, currentFilter = ViewBag.CurrentFilter }))
 
 <div class="row">
@@ -84,7 +100,7 @@
         <label>Imię:</label>
     </div>
     <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="usr">
+        <input type="text" class="form-control" id="fname">
     </div>
 </div>
 
@@ -93,7 +109,7 @@
         <label>Nazwisko:</label>
     </div>
     <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="usr">
+        <input type="text" class="form-control" id="lname">
     </div>
 </div>
 
@@ -102,7 +118,7 @@
         <label>Miejsce urodzenia:</label>
     </div>
     <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="usr">
+        <input type="text" class="form-control" id="bplace">
     </div>
 </div>
 
@@ -111,7 +127,7 @@
         <label>Data urodzenia:</label>
     </div>
     <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="usr" placeholder="1/01/2016">
+        <input type="text" class="form-control" id="bdate" placeholder="1/01/2016">
     </div>
 </div>
 
@@ -120,7 +136,7 @@
         <label>Indeks:</label>
     </div>
     <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="usr">
+        <input type="text" class="form-control" id="inumber">
     </div>
 </div>
 

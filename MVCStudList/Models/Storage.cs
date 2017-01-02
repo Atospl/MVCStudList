@@ -28,6 +28,8 @@ namespace MVCStudList.Models
             }
         }
 
+        
+
         public void CreateStudent(Student s)
         {
             using (var db = new StorageContext())

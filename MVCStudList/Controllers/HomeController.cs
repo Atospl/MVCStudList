@@ -33,7 +33,8 @@ namespace MVCStudList.Controllers
 
             int pageSize = 1;
             int pageNumber = (page ?? 1);
-            return View(model.Students.ToPagedList(pageNumber, int.Parse(WebConfigurationManager.AppSettings["StudListLen"])));
+            model.PageNumber = pageNumber;
+            return View(model);
         }
     }
 }
