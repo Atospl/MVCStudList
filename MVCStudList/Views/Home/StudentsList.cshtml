@@ -6,14 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
 </head>
 
+<script>
+    jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+    function DoNav(theUrl) {
+        document.location.href = theUrl;
+    }
+</script>
 @{
     Layout = null;
 }
 
 
-<table class="table">
+<table class="table table-hover">
     <tr>
         <th>
             Imię
@@ -34,7 +45,7 @@
 
     @foreach (var item in Model)
     {
-        <tr>
+        <tr class="clickable-row" onclick="DoNav('dasda');">
             <td>
                 @Html.DisplayFor(modelItem => item.FirstName)
             </td>
