@@ -5,10 +5,10 @@
 }
 
 @*<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>*@
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>*@
 
 <div class="row">
     <div class="col-lg-6">
@@ -19,47 +19,90 @@
     </div>
 </div>
 
+<hr />
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-8">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label>Grupa:</label>
                 </div>
-                <div class="col-sm-6">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-                            Dropdown Example
-                            <span class="caret"></span>
-                        </button>
-                        @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name"))
-                    </div>
+                <div class="dropdown col-sm-8">
+                    @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name"))
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <label>Miasto:</label>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-8">
                     <div class="form-group">
                         <input type="text" class="form-control" id="usr">
-                    </div>           
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-4">
             <div class="row">
                 <div class="col-sm-6">
-                    <button type="button" class="btn btn-default btn-block">Grupy</button>
+                    <button type="button" class="btn btn-default btn-block" id="ClearBtn">Wyczyść</button>
                 </div>
                 <div class="col-sm-6">
-                    <button type="button" class="btn btn-default btn-block">Grupy</button>
+                    <button type="button" class="btn btn-default btn-block" id="FilterBtn">Filtruj</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <hr />
 
+    <table class="table">
+        <tr>
+            <th>
+                Imię
+            </th>
+            <th>
+                Nazwisko
+            </th>
+            <th>
+                Grupa
+            </th>
+            <th>
+                Miasto
+            </th>
+            <th>
+                Indeks
+            </th>
+        </tr>
 
+        @foreach (var item in Model.Students)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Group.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthPlace)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IndexNo)
+                </td>
+                @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>*@
+            </tr>
+        }
+    </table>
+
+    <hr/>
 
 </div>

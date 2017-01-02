@@ -21,15 +21,11 @@ namespace MVCStudList.Models
             }
         }
 
-        public virtual List<Student> GetStudents()
-        {
-            return storage.GetStudents();
+        public List<Student> Students {
+            get {
+                return storage.GetStudents();
+            }
         }
-
-        //public List<Group> GetGroupsForListing()
-        //{
-
-        //}
 
         public List<Group> GetGroups()
         {
