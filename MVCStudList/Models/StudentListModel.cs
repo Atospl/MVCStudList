@@ -10,6 +10,13 @@ namespace MVCStudList.Models
 {
     public class StudentListModel
     {
+        private List<Student> students;
+
+        public StudentListModel()
+        {
+            students = storage.GetStudents();
+        }
+
         Storage storage = new Storage();
         public int GroupID { get; set; }
         public List<Group> Groups {
@@ -26,13 +33,18 @@ namespace MVCStudList.Models
 
         public List<Student> Students {
             get {
-                return storage.GetStudents();
+                return students;
+            }
+            set {
+                students = value;
             }
         }
 
-        [Required]
-        public string FirstName { get; set; }
+        public int GroupIDFilter;
+        public Group GroupSelected;
+        public string CityFilter;
 
+        public string FirstName { get; set; }
         public string LastName;
         public string GroupName;
         public string BirthPlace;
@@ -59,6 +71,10 @@ namespace MVCStudList.Models
             }
         }
 
+        public List<Student> GetAllStudents()
+        {
+            return storage.GetStudents();
+        }
 
         public List<Group> GetGroups()
         {

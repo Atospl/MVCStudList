@@ -10,36 +10,38 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-8">
-            <div class="row">
-                <div class="col-sm-4">
-                    <label>Grupa:</label>
+        <form>
+            <div class="col-sm-8">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Grupa:</label>
+                    </div>
+                    <div class="dropdown col-sm-8">
+                        @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name", Model.GroupSelected))
+                    </div>
                 </div>
-                <div class="dropdown col-sm-8">
-                    @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name"))
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <label>Miasto:</label>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="usr">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Miasto:</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            @Html.TextBoxFor(m => m.CityFilter, new { @class="form-control" })
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="row">
-                <div class="col-sm-6">
-                    <button type="button" class="btn btn-success btn-block" id="ClearBtn">Wyczyść</button>
-                </div>
-                <div class="col-sm-6">
-                    <button type="button" class="btn btn-success btn-block" id="FilterBtn">Filtruj</button>
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <input type="submit" class="btn btn-success btn-block" id="ClearBtn" formaction="@Url.Action("Clear", "Home")" value="Wyczyść">
+                    </div>
+                    <div class="col-sm-6">
+                        <input type="submit" class="btn btn-success btn-block" id="FilterBtn" formaction="@Url.Action("Filter", "Home")" value="Filtruj"/>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <hr />

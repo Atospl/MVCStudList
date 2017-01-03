@@ -68,6 +68,45 @@ namespace MVCStudList.Controllers
             return View("StudentsList", model);
         }
 
+        public ActionResult Clear()
+        {
+            StudentListModel model = GetModel();
+            model.CityFilter = "";
+            model.GroupIDFilter = 0;
+            model.Students = model.GetAllStudents(); 
+            return View("Index", model);
+
+        }
+
+        public ActionResult Filter(string GroupID, string CityFilter)
+        {
+            StudentListModel model = GetModel();
+            if ((CityFilter == null || CityFilter.Equals("")) && int.Parse(GroupID) == 0)
+            {
+                model.Students = model.GetAllStudents();
+                return View("Index", model);
+            }
+
+            if ((CityFilter == null || CityFilter.Equals("")) && int.Parse(GroupID) != 0)
+            {
+                model.Students = model.GetAllStudents().Where(stud => stud.IDGroup == int.Parse(GroupID)).ToList();
+                return View("Index", model);
+            }
+
+            model.GroupSelected = model.Groups.Where(group => group.IDGroup == int.Parse(GroupID)).First();
+            var newStudents = new List<Student>();
+            var students = model.GetAllStudents();
+            foreach(Student student in students)
+            {
+                if(student.BirthPlace == null)
+                    continue;
+                if (student.BirthPlace.ToUpper().Contains(CityFilter.ToUpper()))
+                    newStudents.Add(student);
+            }
+            model.Students = newStudents;
+            return View("Index", model);
+        }
+
         private StudentListModel GetModel()
         {
             var model = stateManager.Load("model");
