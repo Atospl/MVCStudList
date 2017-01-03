@@ -7,12 +7,14 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MVCStudList.Models;
+using log4net;
 
 namespace MVCStudList
 {
     public class GroupsController : Controller
     {
         private StorageContext db = new StorageContext();
+        private static readonly ILog log = LogManager.GetLogger(typeof(GroupsController));
 
         // GET: Groups
         public ActionResult Index()
@@ -30,6 +32,7 @@ namespace MVCStudList
             Group group = db.Groups.Find(id);
             if (group == null)
             {
+                log.Info("Błąd przy usuwaniu grupy");
                 return View("GroupError", new ErrorModel("Grupa już usunięta!"));
             }
             return View(group);
@@ -62,6 +65,7 @@ namespace MVCStudList
                     db.SaveChanges();
                     return RedirectToAction("Index");
                 }
+                log.Info("Błąd przy tworzeniu grupy");
                 return View("GroupError", new ErrorModel("Grupa już istnieje!"));
 
             }
@@ -74,6 +78,7 @@ namespace MVCStudList
         {
             if (id == null)
             {
+                log.Info("Błąd przy usuwaniu grupy");
                 return View("GroupError", new ErrorModel("Grupa już usunięta!"));
             }
             Group group = db.Groups.Find(id);
@@ -97,6 +102,7 @@ namespace MVCStudList
             }
             catch(Exception ex)
             {
+                log.Info("Błąd przy usuwaniu grupy");
                 return View("GroupError", new ErrorModel("Studenci należą do grupy!"));
             }
             return RedirectToAction("Index");

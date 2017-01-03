@@ -8,12 +8,15 @@ using System.Web.Mvc;
 using PagedList;
 using System.Web.Configuration;
 using MVCStudList.Other;
+using log4net;
 
 namespace MVCStudList.Controllers
 {
     public class HomeController : Controller
     {
         protected IStateManager<StudentListModel> stateManager = new SessionStateManager<StudentListModel>();
+        private static readonly ILog log = LogManager.GetLogger(typeof(HomeController));
+
 
         public ActionResult Index()
         {
@@ -72,6 +75,7 @@ namespace MVCStudList.Controllers
                 //model.ErrorMessage = "Failed to create user";
                 //model.ErrorMessageHidden = false;
                 //Console.WriteLine(ex.Message);
+                log.Info("Błąd przy tworzeniu użytkownika");
                 return View("Error", new ErrorModel("Błąd przy tworzeniu użytkownika!"));
             }
         }
@@ -84,6 +88,8 @@ namespace MVCStudList.Controllers
             if (!oldStudent.Stamp.SequenceEqual(newStudent.Stamp))
             {
                 model.Students = model.GetAllStudents();
+                log.Info("Błąd przy modyfikowaniu użytkownika");
+   
                 return View("Error", new ErrorModel("Student uprzednio zmodyfikowany!"));
             }
             else
@@ -118,6 +124,7 @@ namespace MVCStudList.Controllers
             catch (Exception ex)
             {
                 model.Students = model.GetAllStudents();
+                log.Info("Błąd przy modyfikowaniu użytkownika");
                 return View("Error", new ErrorModel("Student uprzednio zmodyfikowany!"));
             }
             model.Students = model.GetAllStudents();
