@@ -19,6 +19,11 @@
             location.reload();
         });
     }
+
+    jQuery.extend(jQuery.validator.messages, {
+        required: "Pole wymagane.",
+        min: jQuery.validator.format("Wybierz poprawną wartość.")
+    });
 </script>
 
 @{
@@ -80,7 +85,7 @@
                 <label>Grupa:</label>
             </div>
             <div class="col-sm-8 form-group">
-                @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name", Model.GroupChosen), new { @class = "dropdown"})
+                @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name", Model.GroupChosen), new { @class = "dropdown", @min = "1"})
             </div>
         </div>
 
