@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "GroupError";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model MVCStudList.Models.ErrorModel
+
+
+<body>
+    <hgroup>
+        <h1>Błąd aplikacji.</h1>
+        <h2>@Model.ErrorMessage</h2>
+    </hgroup>
+</body>

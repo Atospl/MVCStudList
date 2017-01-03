@@ -30,7 +30,7 @@ namespace MVCStudList
             Group group = db.Groups.Find(id);
             if (group == null)
             {
-                return HttpNotFound();
+                return View("GroupError", new ErrorModel("Grupa już usunięta!"));
             }
             return View(group);
         }
@@ -50,42 +50,22 @@ namespace MVCStudList
         {
             if (ModelState.IsValid)
             {
-                db.Groups.Add(group);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                try
+                {
+                    var groups = db.Groups.Where(gr => gr.Name.Equals(group.Name)).ToList();
+                    if (groups.Count() == 0)
+                        throw new Exception();
+                }
+                catch (Exception)
+                {
+                    db.Groups.Add(group);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View("GroupError", new ErrorModel("Grupa już istnieje!"));
 
-            return View(group);
-        }
-
-        // GET: Groups/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Group group = db.Groups.Find(id);
-            if (group == null)
-            {
-                return HttpNotFound();
-            }
-            return View(group);
-        }
-
-        // POST: Groups/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IDGroup,Name,Stamp")] Group group)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(group).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            db = new StorageContext();
             return View(group);
         }
 
@@ -94,7 +74,7 @@ namespace MVCStudList
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return View("GroupError", new ErrorModel("Grupa już usunięta!"));
             }
             Group group = db.Groups.Find(id);
             if (group == null)
@@ -110,8 +90,15 @@ namespace MVCStudList
         public ActionResult DeleteConfirmed(int id)
         {
             Group group = db.Groups.Find(id);
-            db.Groups.Remove(group);
-            db.SaveChanges();
+            try {
+                db.Groups.Remove(group);
+                db.SaveChanges();
+                db = new StorageContext();
+            }
+            catch(Exception ex)
+            {
+                return View("GroupError", new ErrorModel("Studenci należą do grupy!"));
+            }
             return RedirectToAction("Index");
         }
 
