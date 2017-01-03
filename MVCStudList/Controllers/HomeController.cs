@@ -39,7 +39,25 @@ namespace MVCStudList.Controllers
         public ActionResult SelectStudent(string id)
         {
             StudentListModel model = GetModel();
-            model.Index = model.Students.Where(stud => stud.IndexNo.Equals(id)).First().IndexNo;
+
+            var student = model.Students.Where(stud => stud.IndexNo.Equals(id)).First();
+            model.Index = student.IndexNo;
+            model.BirthDate = student.BirthDate.ToString();
+            model.BirthPlace = student.BirthPlace;
+            model.LastName = student.LastName;
+            model.GroupName = student.Group.Name;
+            model.FirstName = student.FirstName;
+
+            return View("StudentsList", model);
+        }
+
+        public ActionResult New(string GroupID, string FirstName, string LastName, string BirthPlace, string BirthDate, string Index)
+        {
+            StudentListModel model = GetModel();
+            if(ModelState.IsValid)
+            {
+                Console.WriteLine("hello");
+            }
             return View("StudentsList", model);
         }
 
@@ -53,5 +71,6 @@ namespace MVCStudList.Controllers
             }
             return model;
         }
+
     }
 }

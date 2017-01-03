@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using PagedList;
 using System.Web.Configuration;
+using System.ComponentModel.DataAnnotations;
 
 namespace MVCStudList.Models
 {
@@ -29,12 +30,17 @@ namespace MVCStudList.Models
             }
         }
 
-        public string FirstName;
+        [Required]
+        public string FirstName { get; set; }
+
         public string LastName;
         public string GroupName;
         public string BirthPlace;
         public string BirthDate;
         public string Index;
+        public int IDStudent;
+        public byte[] Stamp;
+        public Student Student;
 
         public int PageNumber;
         public string SelectedIndexNo;

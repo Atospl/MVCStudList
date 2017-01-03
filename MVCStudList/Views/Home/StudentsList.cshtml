@@ -7,26 +7,11 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript" src="~/scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/scripts/jquery.validate.js"></script>
 </head>
 
 <script type="text/javascript">
     function SetupInputs(id) {
-        //var nameSelector = id + ' FN';
-        //var surnameSelector = id + ' LN';
-        //var birthplaceSelector = id + ' BP';
-        //var indexnoSelector = id + ' IN';
-
-        //var name = document.getElementById(nameSelector).innerText;
-        //var surname = document.getElementById(surnameSelector).innerText;
-        //var birthplace = document.getElementById(birthplaceSelector).innerText;
-        //var indexno = document.getElementById(indexnoSelector).innerText;
-
-        //$('#fname').val(name);
-        //$('#lname').val(name);
-        //$('#bplace').val(name);
-        //$('#inumber').val(name);
-
-        //hack hack hack
         $.ajax({
             url: 'SelectStudent',
             data: { id: id }
@@ -88,72 +73,79 @@
 @Html.PagedListPager(Model.StudentsPagedList, page => Url.Action("StudentsList",
     new { page, currentFilter = ViewBag.CurrentFilter }))
 
-<div class="row">
-    <div class="col-sm-4">
-        <label>Grupa:</label>
-    </div>
-    <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="usr">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-4">
-        <label>Imię:</label>
-    </div>
-    <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="fname">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-4">
-        <label>Nazwisko:</label>
-    </div>
-    <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="lname">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-4">
-        <label>Miejsce urodzenia:</label>
-    </div>
-    <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="bplace">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-4">
-        <label>Data urodzenia:</label>
-    </div>
-    <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="bdate" placeholder="1/01/2016">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-4">
-        <label>Indeks:</label>
-    </div>
-    <div class="col-sm-8 form-group">
-        <input type="text" class="form-control" id="inumber" value="@Model.Index">
-    </div>
-</div>
-
-<div class="row">
-    <div class="button-box col-sm-6">
-    </div>
-    <div class="button-box col-sm-6">
-        <div class="button-box col-sm-2">
-            <button type="button" class="btn btn-default pull-right btn-block">Nowy</button>
+<form id="inputForm">
+    <fieldset>
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Grupa:</label>
+            </div>
+            <div class="col-sm-8 form-group">
+                @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name"), new { @class = "dropdown"})
+            </div>
         </div>
-        <div class="button-box col-sm-2">
-            <button type="button" class="btn btn-default pull-right btn-block">Zapisz</button>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Imię:</label>
+            </div>
+            <div class="col-sm-8 form-group">
+                @Html.TextBox("FirstName", Model.FirstName, new { @class = "form-control", @required="true"} )
+            </div>
         </div>
-        <div class="button-box col-sm-2">
-            <button type="button" class="btn btn-default pull-right btn-block">Usuń</button>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Nazwisko:</label>
+            </div>
+            <div class="col-sm-8 form-group">
+                @Html.TextBox("LastName", Model.LastName, new { @class = "form-control", @required = "true"})
+            </div>
         </div>
-    </div>
-</div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Miejsce urodzenia:</label>
+            </div>
+            <div class="col-sm-8 form-group">
+                @Html.TextBox("BirthPlace", Model.BirthPlace, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Data urodzenia:</label>
+            </div>
+            <div class="col-sm-8 form-group">
+                @Html.TextBox("BirthDate", Model.BirthDate, new { @class = "form-control", @required = "true"})
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Indeks:</label>
+            </div>
+            <div class="col-sm-8 form-group">
+                @Html.TextBox("Index", Model.Index, new { @class = "form-control", @required = "true"})
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="button-box col-sm-6">
+            </div>
+            <div class="button-box col-sm-6">
+                <div class="button-box col-sm-2">
+                    <input type="submit" class="btn btn-default pull-right btn-block" value="Nowy" formaction="@Url.Action("New", "Home")"/>
+                </div>
+                <div class="button-box col-sm-2">
+                    <button type="button" class="btn btn-default pull-right btn-block">Zapisz</button>
+                </div>
+                <div class="button-box col-sm-2">
+                    <button type="button" class="btn btn-default pull-right btn-block">Usuń</button>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</form>
+<script>
+    $("#inputForm").validate();
+</script>
