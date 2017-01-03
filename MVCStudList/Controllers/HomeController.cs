@@ -56,9 +56,11 @@ namespace MVCStudList.Controllers
             StudentListModel model = GetModel();
 
             Student student = new Student(FirstName, LastName, BirthPlace, Index, DateTime.Parse(BirthDate), int.Parse(GroupID));
+            //student.Group = model.Groups.Where(group => group.IDGroup == int.Parse(GroupID)).First();
             try
             {
                 model.CreateStudent(student);
+                model.Students = model.GetAllStudents();
                 return View("StudentsList", model);
             }
             catch (Exception ex)
@@ -99,16 +101,20 @@ namespace MVCStudList.Controllers
         public ActionResult Remove(string GroupID, string FirstName, string LastName, string BirthPlace, string BirthDate, string Index)
         {
             StudentListModel model = GetModel();
-            var student = model.GetAllStudents().Where(st => st.IndexNo.Equals(Index)).First();
+            var oldStudent = model.Students.Where(student => student.IndexNo.Equals(Index)).First();
+            var newStudent = model.GetAllStudents().Where(student => student.IndexNo.Equals(Index)).First();
             try
             {
-                model.DeleteStudent(student);
+                if (!oldStudent.Stamp.SequenceEqual(newStudent.Stamp))
+                    throw new Exception();
+                model.DeleteStudent(oldStudent);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                model.Students = model.GetAllStudents();
+                return View("Error", new ErrorModel("Student uprzednio zmodyfikowany!"));
             }
-            model = GetModel();
+            model.Students = model.GetAllStudents();
             return View("StudentsList", model);
 
         }
