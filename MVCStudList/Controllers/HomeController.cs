@@ -48,12 +48,16 @@ namespace MVCStudList.Controllers
             model.GroupName = student.Group.Name;
             model.FirstName = student.FirstName;
             model.GroupChosen = model.Groups.Where(group => group.IDGroup == student.IDGroup).First();
+
+            model.Students = model.GetAllStudents();
             return View("StudentsList", model);
         }
 
         public ActionResult New(string GroupID, string FirstName, string LastName, string BirthPlace, string BirthDate, string Index)
         {
             StudentListModel model = GetModel();
+            if (Index.Equals(""))
+                return View("StudentsList", model);
 
             Student student = new Student(FirstName, LastName, BirthPlace, Index, DateTime.Parse(BirthDate), int.Parse(GroupID));
             //student.Group = model.Groups.Where(group => group.IDGroup == int.Parse(GroupID)).First();
@@ -94,6 +98,8 @@ namespace MVCStudList.Controllers
             }
 
             model.Students = model.GetAllStudents();
+            model.FirstName = "";
+
             return View("StudentsList", model);
 
         }
@@ -115,6 +121,7 @@ namespace MVCStudList.Controllers
                 return View("Error", new ErrorModel("Student uprzednio zmodyfikowany!"));
             }
             model.Students = model.GetAllStudents();
+            model.FirstName = "";
             return View("StudentsList", model);
 
         }
@@ -178,6 +185,5 @@ namespace MVCStudList.Controllers
 
             return model;
         }
-
     }
 }
