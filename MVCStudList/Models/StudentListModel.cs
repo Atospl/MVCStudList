@@ -40,6 +40,8 @@ namespace MVCStudList.Models
             }
         }
 
+
+
         public int GroupIDFilter;
         public Group GroupSelected;
         public string CityFilter;

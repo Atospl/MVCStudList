@@ -40,7 +40,7 @@ namespace MVCStudList.Controllers
         {
             StudentListModel model = GetModel();
 
-            var student = model.Students.Where(stud => stud.IndexNo.Equals(id)).First();
+            var student = model.Students.Where(stud => stud.IDStudent == int.Parse(id)).First();
             model.Index = student.IndexNo;
             model.BirthDate = student.BirthDate.ToString();
             model.BirthPlace = student.BirthPlace;
@@ -55,7 +55,7 @@ namespace MVCStudList.Controllers
         {
             StudentListModel model = GetModel();
 
-            Student student = new Student(FirstName, LastName, BirthPlace, Index, DateTime.Parse(BirthDate), 1);
+            Student student = new Student(FirstName, LastName, BirthPlace, Index, DateTime.Parse(BirthDate), int.Parse(GroupID));
             try
             {
                 model.CreateStudent(student);
@@ -66,6 +66,32 @@ namespace MVCStudList.Controllers
             }
 
             return View("StudentsList", model);
+        }
+
+        public ActionResult Save(string GroupID, string FirstName, string LastName, string BirthPlace, string BirthDate, string Index)
+        {
+            StudentListModel model = GetModel();
+
+
+            return View("StudentsList", model);
+
+        }
+
+        public ActionResult Remove(string GroupID, string FirstName, string LastName, string BirthPlace, string BirthDate, string Index)
+        {
+            StudentListModel model = GetModel();
+            var student = model.GetAllStudents().Where(st => st.IndexNo.Equals(Index)).First();
+            try
+            {
+                model.DeleteStudent(student);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            model = GetModel();
+            return View("StudentsList", model);
+
         }
 
         public ActionResult Clear()
@@ -100,8 +126,16 @@ namespace MVCStudList.Controllers
             {
                 if(student.BirthPlace == null)
                     continue;
-                if (student.BirthPlace.ToUpper().Contains(CityFilter.ToUpper()))
-                    newStudents.Add(student);
+                if (int.Parse(GroupID) == 0)
+                {
+                    if (student.BirthPlace.ToUpper().Contains(CityFilter.ToUpper()))
+                        newStudents.Add(student);
+                }
+                else
+                {
+                    if (student.BirthPlace.ToUpper().Contains(CityFilter.ToUpper()) && student.IDGroup == int.Parse(GroupID))
+                        newStudents.Add(student);
+                }
             }
             model.Students = newStudents;
             return View("Index", model);
