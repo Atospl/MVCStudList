@@ -116,7 +116,7 @@
                 <label>Data urodzenia:</label>
             </div>
             <div class="col-sm-8 form-group">
-                @Html.TextBox("BirthDate", Model.BirthDate, new { @class = "form-control", @required = "true"})
+                @Html.TextBox("BirthDate", Model.BirthDate, new { @class = "form-control"})
             </div>
         </div>
 
@@ -134,13 +134,13 @@
             </div>
             <div class="button-box col-sm-6">
                 <div class="button-box col-sm-2">
-                    <input type="submit" class="btn btn-default pull-right btn-block" value="Nowy" formaction="@Url.Action("New", "Home")"/>
+                    <input type="submit" class="btn btn-primary pull-right btn-block" value="Nowy" formaction="@Url.Action("New", "Home")"/>
                 </div>
                 <div class="button-box col-sm-2">
-                    <button type="button" class="btn btn-default pull-right btn-block">Zapisz</button>
+                    <button type="button" class="btn btn-primary pull-right btn-block">Zapisz</button>
                 </div>
                 <div class="button-box col-sm-2">
-                    <button type="button" class="btn btn-default pull-right btn-block">Usuń</button>
+                    <button type="button" class="btn btn-primary pull-right btn-block">Usuń</button>
                 </div>
             </div>
         </div>

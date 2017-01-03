@@ -17,18 +17,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("MVC Lista Studentów", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                @*<ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                </ul>
+                </ul>*@
             </div>
         </div>
     </div>
     <div class="container body-content">
+        <hr />
+
+        <div class="row">
+            <div class="col-lg-6">
+                <button type="button" class="btn btn-block btn-info">Studenci</button>
+            </div>
+            <div class="col-lg-6">
+                <button type="button" class="btn btn-info btn-block">Grupy</button>
+            </div>
+        </div>
+
+
         @RenderBody()
         <hr />
+
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
@@ -37,5 +50,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
 </body>
 </html>
