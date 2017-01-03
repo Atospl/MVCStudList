@@ -43,6 +43,7 @@ namespace MVCStudList.Models
         public int GroupIDFilter;
         public Group GroupSelected;
         public string CityFilter;
+        public Group GroupChosen;
 
         public string FirstName { get; set; }
         public string LastName;

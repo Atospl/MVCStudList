@@ -6,7 +6,7 @@ namespace MVCStudList.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Group
+    public partial class Group : System.IEquatable<Group>
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Group()
@@ -20,7 +20,7 @@ namespace MVCStudList.Models
             Name = name;
         }
 
-        [Key]
+             [Key]
         public int IDGroup { get; set; }
 
         [Required]
@@ -35,5 +35,9 @@ namespace MVCStudList.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
 
+        public bool Equals(Group other)
+        {
+            return this.IDGroup == other.IDGroup;
+        }
     }
 }

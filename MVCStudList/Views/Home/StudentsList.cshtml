@@ -80,7 +80,7 @@
                 <label>Grupa:</label>
             </div>
             <div class="col-sm-8 form-group">
-                @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name"), new { @class = "dropdown"})
+                @Html.DropDownListFor(m => m.GroupID, new SelectList(Model.Groups, "IDGroup", "Name", Model.GroupChosen), new { @class = "dropdown"})
             </div>
         </div>
 

@@ -47,7 +47,7 @@ namespace MVCStudList.Controllers
             model.LastName = student.LastName;
             model.GroupName = student.Group.Name;
             model.FirstName = student.FirstName;
-
+            model.GroupChosen = model.Groups.Where(group => group.IDGroup == student.IDGroup).First();
             return View("StudentsList", model);
         }
 
