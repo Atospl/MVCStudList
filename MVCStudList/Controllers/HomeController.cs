@@ -7,26 +7,25 @@ using System.Web;
 using System.Web.Mvc;
 using PagedList;
 using System.Web.Configuration;
+using MVCStudList.Other;
 
 namespace MVCStudList.Controllers
 {
     public class HomeController : Controller
     {
-        //private StudentListModel model = new StudentListModel();
+        protected IStateManager<StudentListModel> stateManager = new SessionStateManager<StudentListModel>();
 
         public ActionResult Index()
         {
             Database.SetInitializer<StorageContext>(null);  // to wyłącza sprawdzanie migracji
-            Storage s = new Storage();
-            s.GetGroups();
-            StudentListModel model = new StudentListModel();
+            StudentListModel model = GetModel();
             Database.SetInitializer<StorageContext>(null);  // to wyłącza sprawdzanie migracji
             return View(model);
         }
 
         public ActionResult StudentsList(int? page, string currentFilter)
         {
-            StudentListModel model = new StudentListModel();
+            StudentListModel model = GetModel();
             Database.SetInitializer<StorageContext>(null);  // to wyłącza sprawdzanie migracji
             //TODO ładować tu studentów i filtrować
 
@@ -35,6 +34,24 @@ namespace MVCStudList.Controllers
             int pageNumber = (page ?? 1);
             model.PageNumber = pageNumber;
             return View(model);
+        }
+
+        public ActionResult SelectStudent(string id)
+        {
+            StudentListModel model = GetModel();
+            model.Index = model.Students.Where(stud => stud.IndexNo.Equals(id)).First().IndexNo;
+            return View("StudentsList", model);
+        }
+
+        private StudentListModel GetModel()
+        {
+            var model = stateManager.Load("model");
+            if (model == null)
+            {
+                model = new StudentListModel();
+                stateManager.Save("model", model);
+            }
+            return model;
         }
     }
 }

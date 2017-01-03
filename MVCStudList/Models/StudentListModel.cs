@@ -29,6 +29,13 @@ namespace MVCStudList.Models
             }
         }
 
+        public string FirstName;
+        public string LastName;
+        public string GroupName;
+        public string BirthPlace;
+        public string BirthDate;
+        public string Index;
+
         public int PageNumber;
         public string SelectedIndexNo;
 
