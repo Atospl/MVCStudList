@@ -59,13 +59,15 @@ namespace MVCStudList.Controllers
             try
             {
                 model.CreateStudent(student);
+                return View("StudentsList", model);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                //model.ErrorMessage = "Failed to create user";
+                //model.ErrorMessageHidden = false;
+                //Console.WriteLine(ex.Message);
+                return View("Error", new ErrorModel("Error when creating user"));
             }
-
-            return View("StudentsList", model);
         }
 
         public ActionResult Save(string GroupID, string FirstName, string LastName, string BirthPlace, string BirthDate, string Index)
@@ -149,6 +151,9 @@ namespace MVCStudList.Controllers
                 model = new StudentListModel();
                 stateManager.Save("model", model);
             }
+            //model.ErrorMessage = "";
+            //model.ErrorMessageHidden = true;
+
             return model;
         }
 

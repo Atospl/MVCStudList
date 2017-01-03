@@ -40,7 +40,8 @@ namespace MVCStudList.Models
             }
         }
 
-
+        public string ErrorMessage = "";
+        public bool ErrorMessageHidden = true;
 
         public int GroupIDFilter;
         public Group GroupSelected;
