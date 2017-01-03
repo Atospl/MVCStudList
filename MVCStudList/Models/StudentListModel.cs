@@ -15,6 +15,9 @@ namespace MVCStudList.Models
         public StudentListModel()
         {
             students = storage.GetStudents();
+            GroupSelected = null;
+            CityFilter = "";
+            PageNumber = 1;
         }
 
         Storage storage = new Storage();
@@ -39,9 +42,6 @@ namespace MVCStudList.Models
                 students = value;
             }
         }
-
-        public string ErrorMessage = "";
-        public bool ErrorMessageHidden = true;
 
         public int GroupIDFilter;
         public Group GroupSelected;

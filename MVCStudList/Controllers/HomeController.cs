@@ -66,15 +66,32 @@ namespace MVCStudList.Controllers
                 //model.ErrorMessage = "Failed to create user";
                 //model.ErrorMessageHidden = false;
                 //Console.WriteLine(ex.Message);
-                return View("Error", new ErrorModel("Error when creating user"));
+                return View("Error", new ErrorModel("Błąd przy tworzeniu użytkownika!"));
             }
         }
 
         public ActionResult Save(string GroupID, string FirstName, string LastName, string BirthPlace, string BirthDate, string Index)
         {
             StudentListModel model = GetModel();
+            var oldStudent = model.Students.Where(student => student.IndexNo.Equals(Index)).First();
+            var newStudent = model.GetAllStudents().Where(student => student.IndexNo.Equals(Index)).First();
+            if (!oldStudent.Stamp.SequenceEqual(newStudent.Stamp))
+            {
+                model.Students = model.GetAllStudents();
+                return View("Error", new ErrorModel("Student uprzednio zmodyfikowany!"));
+            }
+            else
+            {
+                oldStudent.FirstName = FirstName;
+                oldStudent.LastName = LastName;
+                oldStudent.BirthPlace = BirthPlace;
+                oldStudent.BirthDate = DateTime.Parse(BirthDate);
+                oldStudent.IndexNo = Index;
+                oldStudent.IDGroup = int.Parse(GroupID);
+                model.UpdateStudent(oldStudent);
+            }
 
-
+            model.Students = model.GetAllStudents();
             return View("StudentsList", model);
 
         }
@@ -103,7 +120,6 @@ namespace MVCStudList.Controllers
             model.GroupIDFilter = 0;
             model.Students = model.GetAllStudents(); 
             return View("Index", model);
-
         }
 
         public ActionResult Filter(string GroupID, string CityFilter)
