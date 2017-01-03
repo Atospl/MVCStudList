@@ -54,10 +54,17 @@ namespace MVCStudList.Controllers
         public ActionResult New(string GroupID, string FirstName, string LastName, string BirthPlace, string BirthDate, string Index)
         {
             StudentListModel model = GetModel();
-            if(ModelState.IsValid)
+
+            Student student = new Student(FirstName, LastName, BirthPlace, Index, DateTime.Parse(BirthDate), 1);
+            try
             {
-                Console.WriteLine("hello");
+                model.CreateStudent(student);
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
             return View("StudentsList", model);
         }
 
