@@ -108,6 +108,48 @@ namespace MVCStudList
             return RedirectToAction("Index");
         }
 
+        // GET: Groups/Edit/5
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                log.Info("Błąd przy modyfikowaniu grupy");
+                return View("GroupError", new ErrorModel("Grupa uprzednio zmodyfikowana!"));
+            }
+            Group group = db.Groups.Find(id);
+            if (group == null)
+            {
+                log.Info("Błąd przy modyfikowaniu grupy");
+                return View("GroupError", new ErrorModel("Grupa nie istnieje!"));
+            }
+            return View(group);
+        }
+
+        // POST: Groups/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "IDGroup,Name,Stamp")] Group group)
+        {
+            if (ModelState.IsValid)
+            {
+                var grp = db.Groups.Where(gr => gr.IDGroup == group.IDGroup).First();
+                grp.Name = group.Name;
+                //db.Entry(group).State = EntityState.Modified;
+                try {
+                    db.SaveChanges();
+                }
+                catch(Exception ex)
+                {
+                    log.Info("Błąd przy modyfikowaniu grupy");
+                    return View("GroupError", new ErrorModel("Grupa uprzednio zmodyfikowana!"));
+                }
+                return RedirectToAction("Index");
+            }
+            return View(group);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

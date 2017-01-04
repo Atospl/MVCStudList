@@ -22,6 +22,7 @@ namespace MVCStudList.Controllers
         {
             Database.SetInitializer<StorageContext>(null);  // to wyłącza sprawdzanie migracji
             StudentListModel model = GetModel();
+            model.Students = model.GetAllStudents();
             Database.SetInitializer<StorageContext>(null);  // to wyłącza sprawdzanie migracji
             return View(model);
         }
